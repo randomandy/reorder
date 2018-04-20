@@ -83,7 +83,48 @@ func orderBookings(bookings []Booking) []Booking {
 		bookings = removeBookingByID(bookings, bookings[0].Id)
 	}
 
+	bookings = recursiveOrdering(bookings)
+
 	return finalOrder
+}
+
+// Method to be called recursively for ordering list of bookings to match Start/End locations
+func recursiveOrdering(bookings []Booking) []Booking {
+
+	var bookingAdded bool
+
+	// Loop through all bookings to find next booking which matches previous End location
+	for _, booking := range bookings {
+
+		if booking.Start == finalOrder[len(finalOrder)-1].End {
+			finalOrder = append(finalOrder, booking)
+			bookings = removeBookingByID(bookings, booking.Id)
+
+			bookingAdded = true
+		}
+	}
+
+	// Call recursive order method if a valid booking was found already
+	// and more bookings are available
+	if bookingAdded == true && len(bookings) > 0 {
+		recursiveOrdering(bookings)
+
+		// If no booking matching last end location can be found, add next available booking
+	} else if bookingAdded == false && len(bookings) > 0 {
+		finalOrder = append(finalOrder, bookings[0])
+		bookings = removeBookingByID(bookings, bookings[0].Id)
+
+		// Increase relocation counter for non-matching Start/End locations
+		relocationAmount++
+
+		// If more bookings remain to be ordered, call self recursively
+		if len(bookings) > 0 {
+			recursiveOrdering(bookings)
+		}
+
+	}
+
+	return bookings
 }
 
 func main() {
