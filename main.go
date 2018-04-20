@@ -58,6 +58,33 @@ func getBookingsFromFile(uri string) []Booking {
 	return bookings
 }
 
+// Removes the booking with the given ID from the given list
+func removeBookingByID(bookings []Booking, ID int) []Booking {
+
+	var scrappedBookings []Booking
+
+	for _, booking := range bookings {
+		if booking.Id == ID {
+			continue
+		} else {
+			scrappedBookings = append(scrappedBookings, booking)
+		}
+	}
+
+	return scrappedBookings
+}
+
+func orderBookings(bookings []Booking) []Booking {
+
+	// If list contains bookings, add first entry to list
+	if len(bookings) > 0 {
+		finalOrder = append(finalOrder, bookings[0])
+		bookings = removeBookingByID(bookings, bookings[0].Id)
+	}
+
+	return finalOrder
+}
+
 func main() {
 
 	// Parse JSON file from CLI argument
