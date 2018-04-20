@@ -58,6 +58,10 @@ There is also a usage help in case you get lost:
 
 	$GOPATH/bin/reorder --help
 
+## Notes
+
+Keep in mind that the current algorithm assumes that the first booking location of the car is defined by the first booking of the given booking list (JSON file).
+It would be possible to optimize the booking order even further, by calculating the best first start location of the first booking.
 
 
 
