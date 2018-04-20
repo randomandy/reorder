@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strconv"
 )
 
 // Global vars for storing ordered list and relocation amount
@@ -107,5 +108,22 @@ func main() {
 	for _, booking := range bookings {
 		fmt.Println(booking.toString())
 	}
+	fmt.Println("---")
+
+	// Order bookings
+	bookings = orderBookings(bookings)
+
+	// Print the final ordered list to STDOUT
+	fmt.Println("---Final Ordered Booking List---")
+	for _, booking := range bookings {
+		fmt.Println(booking.toString())
+	}
+
+	// Print the total required relocation count to STDOUT
+	fmt.Println("---")
+	fmt.Println(
+		"Number of relocations required: " +
+			strconv.Itoa(relocationAmount),
+	)
 	fmt.Println("---")
 }
